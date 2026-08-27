@@ -1,19 +1,45 @@
+# Spring Boot 应用基础配置
 spring:
+  # 可选加载仅供本机使用的敏感配置，该文件不会提交到 Git
+  config:
+    import: optional:classpath:application-local.yml
+
+  # 应用名称
   application:
     name: ai-no-code-platform
+
+  # MySQL 数据源配置
+  datasource:
+    # MySQL JDBC 驱动
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据库连接地址
+    url: ${DB_URL:jdbc:mysql://localhost:3306/ai_no_code_platform}
+    # 数据库用户名
+    username: ${DB_USERNAME:root}
+    # 数据库密码
+    password: ${DB_PASSWORD:}
+
+# Spring Boot 内置 Web 服务配置
 server:
+  # 服务监听端口
   port: 8000
   servlet:
+    # 统一接口上下文路径
     context-path: /api
 
-# springdoc-openapi
+# SpringDoc OpenAPI 接口文档配置
 springdoc:
+  # 接口文档分组配置
   group-configs:
+    # 默认接口文档分组
     - group: 'default'
+      # 扫描 Controller 所在包
       packages-to-scan: com.gjq.ainocodeplatform.controller
 
-# knife4j
+# Knife4j 接口文档增强配置
 knife4j:
+  # 启用 Knife4j 页面
   enable: true
   setting:
+    # 设置 Knife4j 页面语言
     language: zh_cn
